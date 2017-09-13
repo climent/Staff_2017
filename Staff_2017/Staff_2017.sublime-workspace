@@ -1,0 +1,571 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"lf",
+				"lifetime"
+			],
+			[
+				"acc",
+				"acceleration"
+			],
+			[
+				"spar",
+				"sparknum"
+			],
+			[
+				"sp",
+				"sparknum"
+			],
+			[
+				"Sa",
+				"SafeSetLed"
+			],
+			[
+				"pa",
+				"palincrement"
+			],
+			[
+				"pal",
+				"pallocation"
+			],
+			[
+				"vel",
+				"velocity"
+			],
+			[
+				"mic",
+				"micstillNshift"
+			],
+			[
+				"N",
+				"Nshift"
+			],
+			[
+				"mics",
+				"micsperNshift"
+			],
+			[
+				"m",
+				"micstillNshift"
+			],
+			[
+				"Ran",
+				"SetRandomSpot"
+			],
+			[
+				"random",
+				"random8"
+			],
+			[
+				"dec",
+				"dec_sunrise_gp"
+			],
+			[
+				"cycle",
+				"cycleVal"
+			],
+			[
+				"cy",
+				"cycleVal"
+			],
+			[
+				"num",
+				"numRingsPerLength"
+			],
+			[
+				"sec",
+				"secsPerLength"
+			],
+			[
+				"scr",
+				"scriptBufSize"
+			],
+			[
+				"script",
+				"scriptBufIndex"
+			],
+			[
+				"sc",
+				"scriptBufIndex"
+			],
+			[
+				"scri",
+				"scriptBufSize"
+			],
+			[
+				"Read",
+				"ReadOneScriptLine"
+			],
+			[
+				"set",
+				"SetFrequency"
+			],
+			[
+				"Set",
+				"SetFadeTime"
+			],
+			[
+				"MAX",
+				"MAX_ARGS"
+			],
+			[
+				"c",
+				"currenteffects"
+			],
+			[
+				"effect",
+				"effectTable"
+			],
+			[
+				"hsv",
+				"hsvOrange"
+			],
+			[
+				"k",
+				"kOverwriteIfEven"
+			],
+			[
+				"sele",
+				"selectedEffect"
+			],
+			[
+				"fade",
+				"fadeunits"
+			],
+			[
+				"fadeper",
+				"fadeperframe"
+			],
+			[
+				"SetColor",
+				"SetColorMode"
+			],
+			[
+				"time",
+				"timeTillLaunch"
+			],
+			[
+				"numTo",
+				"numToShift"
+			],
+			[
+				"color",
+				"colormode"
+			],
+			[
+				"C",
+				"CHSV"
+			],
+			[
+				"gener",
+				"generate4gradient"
+			],
+			[
+				"gern",
+				"generatepalette"
+			],
+			[
+				"pre",
+				"prevIndex"
+			],
+			[
+				"Ren",
+				"RenderFromTo"
+			],
+			[
+				"index",
+				"index1"
+			],
+			[
+				"rand",
+				"randompalette"
+			],
+			[
+				"ind",
+				"index2"
+			],
+			[
+				"prev",
+				"prevIndex2"
+			],
+			[
+				"ea",
+				"easeOutQuarticTable"
+			],
+			[
+				"sine",
+				"sineTable"
+			],
+			[
+				"ris",
+				"riseTarget"
+			],
+			[
+				"rise",
+				"riseTarget"
+			],
+			[
+				"bo",
+				"bottomSustainTarget"
+			],
+			[
+				"fall",
+				"fallTarget"
+			],
+			[
+				"top",
+				"topSustainTarget"
+			],
+			[
+				"cur",
+				"curMicCounter"
+			],
+			[
+				"bott",
+				"bottomSustainTime"
+			],
+			[
+				"tra",
+				"travelTimeInMics"
+			],
+			[
+				"laun",
+				"launchIntervalInMics"
+			],
+			[
+				"pause",
+				"pauseTimeInMics"
+			],
+			[
+				"travel",
+				"travelTimeInMics"
+			],
+			[
+				"mi",
+				"micsToTravel"
+			],
+			[
+				"rep",
+				"repeat"
+			],
+			[
+				"micst",
+				"micsToPause"
+			],
+			[
+				"trav",
+				"travelTimeInMics"
+			],
+			[
+				"micsTo",
+				"micsToTravel"
+			],
+			[
+				"cr",
+				"curDirection"
+			],
+			[
+				"cu",
+				"curPosition"
+			],
+			[
+				"mover",
+				"moverstyle"
+			],
+			[
+				"ne",
+				"nextLocation"
+			],
+			[
+				"whi",
+				"whichDrop"
+			],
+			[
+				"fad",
+				"fadedColor"
+			],
+			[
+				"spark",
+				"sparkcolor"
+			],
+			[
+				"delta",
+				"deltaseconds"
+			],
+			[
+				"loc",
+				"location"
+			],
+			[
+				"int",
+				"intensity"
+			],
+			[
+				"drop",
+				"droparray"
+			],
+			[
+				"pat",
+				"patternShift"
+			],
+			[
+				"pattern",
+				"patternShift"
+			],
+			[
+				"pas",
+				"palchangespersec"
+			],
+			[
+				"start",
+				"startIndexB"
+			],
+			[
+				"startI",
+				"startIndexA"
+			],
+			[
+				"max",
+				"maxAz"
+			],
+			[
+				"nex",
+				"nextfadetime"
+			],
+			[
+				"next",
+				"nextsparktime"
+			],
+			[
+				"spa",
+				"sparkarray"
+			],
+			[
+				"seconds",
+				"secondsperlevel"
+			],
+			[
+				"bg",
+				"bgjob"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/pulse.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/Staff_2017.ino",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/controls.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/throb.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/sparks.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/particle.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/Crackle.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/led_utils.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/effect.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/palettes.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/everyn.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/commands.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/pmarch.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/fluid.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/scripts.txt",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/drops.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/modchase.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/pools.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/mixer.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/lfo.h",
+		"/Users/maxandkaia/Documents/Arduino/libraries/FastLed/colorutils.cpp",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/tables.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/commonheaders.h",
+		"/Users/maxandkaia/Documents/Arduino/libraries/FastLed/colorpalettes.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/gradcommand.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/motion.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/number_utils.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/color_utils.h",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/Staff_2017.sublime-project",
+		"/Users/maxandkaia/Documents/Arduino/Staff_2017/mover.h",
+		"/Users/maxandkaia/Documents/ShellLab/tsh.c",
+		"/Users/maxandkaia/Documents/ShellLab/mystop.c",
+		"/Users/maxandkaia/Documents/ShellLab/mysplit.c",
+		"/Users/maxandkaia/Documents/ShellLab/myspin.c",
+		"/Users/maxandkaia/Documents/ShellLab/myint.c",
+		"/Users/maxandkaia/Documents/ShellLab/shellLab.sublime-project"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"<open files>",
+			"orange<open files>",
+			"/Users/maxandkaia/Documents/Arduino/libraries/FastLed",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"set_max_power_in_volts_and_milliamps",
+			"amps",
+			"set_max_power_in_volts_and_milliamps",
+			"orange",
+			"or",
+			"orange",
+			"set_max_power_in_volts_and_milliamps",
+			"ColorFromPalette",
+			"cloud",
+			"<num",
+			"< num",
+			", int num",
+			"changed",
+			"changed state",
+			"leds",
+			"Render(C",
+			"2"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"< NUM_LEDS",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 112.0
+	},
+	"pinned_build_system": "",
+	"project": "Staff_2017.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

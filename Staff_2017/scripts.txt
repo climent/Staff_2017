@@ -1,0 +1,3 @@
+seteffect 0 pools
+seteffect 1 everyn
+blendmode 1 1
