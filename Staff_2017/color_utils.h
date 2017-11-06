@@ -1,24 +1,23 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-
-  CHSV hsvOrange = CHSV(HUE_ORANGE,255,255);
-  CHSV hsvPurple = CHSV(HUE_PURPLE,255,255);
-  CHSV hsvBlue = CHSV(HUE_BLUE,255,255);
-  CHSV hsvRed = CHSV(HUE_RED,255,255);
-  CHSV hsvGreen = CHSV(HUE_GREEN,255,255);
-  CHSV hsvPink = CHSV(HUE_PINK,255,255);
-  CHSV hsvYellow = CHSV(HUE_YELLOW,255,255);
+CHSV hsvOrange = CHSV(HUE_ORANGE, 255, 255);
+CHSV hsvPurple = CHSV(HUE_PURPLE, 255, 255);
+CHSV hsvBlue = CHSV(HUE_BLUE, 255, 255);
+CHSV hsvRed = CHSV(HUE_RED, 255, 255);
+CHSV hsvGreen = CHSV(HUE_GREEN, 255, 255);
+CHSV hsvPink = CHSV(HUE_PINK, 255, 255);
+CHSV hsvYellow = CHSV(HUE_YELLOW, 255, 255);
 
 
 void PrintColor(CRGB c)
 {
-  Serial.print("color: "); Serial.print(c.r);Serial.print(", ");Serial.print(c.g);Serial.print(", ");Serial.println(c.b);
+  Serial.print("color: "); Serial.print(c.r); Serial.print(", "); Serial.print(c.g); Serial.print(", "); Serial.println(c.b);
 }
 
 void PrintColor(CHSV c)
 {
-  Serial.print("hsvcolor: "); Serial.print(c.h);Serial.print(", ");Serial.print(c.s);Serial.print(", ");Serial.println(c.v);
+  Serial.print("hsvcolor: "); Serial.print(c.h); Serial.print(", "); Serial.print(c.s); Serial.print(", "); Serial.println(c.v);
 }
 
 
@@ -35,20 +34,20 @@ void CheckColor(float r, float g, float b)
   if (b < 0 || b > 255.0f)
   {
     Serial.print("Bad b value: "); Serial.println(b);
-  } 
+  }
 }
 
-  
-  CRGB randomcolor()
-  {
-  	return CRGB(random(0,256),random(0,256),random(0,256));
-  }
 
-  CHSV randomhsv()
-  {
-  	return CHSV(random(0,256),random(0,256),random(0,256));
-  }
-  
+CRGB randomcolor()
+{
+  return CRGB(random(0, 256), random(0, 256), random(0, 256));
+}
+
+CHSV randomhsv()
+{
+  return CHSV(random(0, 256), random(0, 256), random(0, 256));
+}
+
 /*! \brief Convert RGB to HSV color space
 
   Converts a given set of RGB values `r', `g', `b' into HSV
@@ -109,5 +108,5 @@ CHSV rgb2hsv(CRGB &in)
   out.v = (int)(v * 255.0f);
   return out;
 }
-  
+
 #endif

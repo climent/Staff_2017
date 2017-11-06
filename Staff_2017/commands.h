@@ -27,27 +27,27 @@ effect* EffectByName(const char* name)
 {
   Serial.print("Looking up effect: "); Serial.println(name);
 
-  if (strcmp(name,"crackles") == 0) return &crackles;
-  else if (strcmp(name,"drops") == 0) return &drops;
-  else if (strcmp(name,"modchase") == 0) return &modchase;
-  else if (strcmp(name,"pulse") == 0) return &pulse;
-  else if (strcmp(name,"pools") == 0) return &pools;
-  else if (strcmp(name,"everyn") == 0) return &everyn;
-  else if (strcmp(name,"throb") == 0) return &throb;
-  else if (strcmp(name,"pmarch") == 0) return &pmarch;
-  else if (strcmp(name,"fluid") == 0) return &fluid;
-  else if (strcmp(name,"crawl") == 0) return &crawl;
-  else if (strcmp(name,"flame") == 0) return &flame;
-  else if (strcmp(name,"null") == 0) return &null;
-  else if (strcmp(name,"random") == 0)
+  if (strcmp(name, "crackles") == 0) return &crackles;
+  else if (strcmp(name, "drops") == 0) return &drops;
+  else if (strcmp(name, "modchase") == 0) return &modchase;
+  else if (strcmp(name, "pulse") == 0) return &pulse;
+  else if (strcmp(name, "pools") == 0) return &pools;
+  else if (strcmp(name, "everyn") == 0) return &everyn;
+  else if (strcmp(name, "throb") == 0) return &throb;
+  else if (strcmp(name, "pmarch") == 0) return &pmarch;
+  else if (strcmp(name, "fluid") == 0) return &fluid;
+  else if (strcmp(name, "crawl") == 0) return &crawl;
+  else if (strcmp(name, "flame") == 0) return &flame;
+  else if (strcmp(name, "null") == 0) return &null;
+  else if (strcmp(name, "random") == 0)
   {
-    int selection = random(0,numEffects);
+    int selection = random(0, numEffects);
     return effectTable[selection];
   }
   else
   {
     Serial.println("Unrecognized effect!");
-   return &null;
+    return &null;
   }
 
 }
@@ -131,14 +131,14 @@ void SplitCommand()
 {
 
   numArgs = 0;
-  command = strtok (inputBuffer,"  ,");
-//  Serial.print("command is: "); Serial.println(command);
+  command = strtok (inputBuffer, "  ,");
+  //  Serial.print("command is: "); Serial.println(command);
   if (command == NULL) return;
 
   do {
     args[numArgs] = strtok (NULL, " ,");
     numArgs++;
-  } while (args[numArgs-1] != NULL); 
+  } while (args[numArgs - 1] != NULL);
   numArgs--;
   Serial.print("numargs is: "); Serial.println(numArgs);
 }
@@ -211,21 +211,21 @@ void DoCommand()
   SplitCommand();
 
   Serial.print("Command: "); Serial.println(command);
-  for (int i=0; i<numArgs; i++)
+  for (int i = 0; i < numArgs; i++)
   {
     Serial.print("Arg: "); Serial.println(args[i]);
   }
 
 
-  if (strcmp(command,"amps") == 0)
+  if (strcmp(command, "amps") == 0)
   {
     uint32_t A = atoi(args[0]);
     Serial.println("doing amps < milliamps> command");
     Serial.println(A);
     // limit my draw to A amps at 5v of power draw
-    set_max_power_in_volts_and_milliamps(5,A);
+    set_max_power_in_volts_and_milliamps(5, A);
   }
-  else if (strcmp(command,"speed") == 0)
+  else if (strcmp(command, "speed") == 0)
   {
     float S = atof(args[0]);
     Serial.println("doing speed <speed> command");
@@ -233,7 +233,7 @@ void DoCommand()
     if (selectedEffect)
       selectedEffect->SetSpeed(S);
   }
-  else if (strcmp(command,"span") == 0)
+  else if (strcmp(command, "span") == 0)
   {
     int S = atoi(args[0]);
     Serial.println("doing span <span> command");
@@ -241,7 +241,7 @@ void DoCommand()
     if (selectedEffect)
       selectedEffect->SetSpan(S);
   }
-  else if (strcmp(command,"width") == 0)
+  else if (strcmp(command, "width") == 0)
   {
     float W = atof(args[0]);
     Serial.println("doing width <width> command");
@@ -249,7 +249,7 @@ void DoCommand()
     if (selectedEffect)
       selectedEffect->SetWidth(W);
   }
- else if (strcmp(command,"bright") == 0)
+  else if (strcmp(command, "bright") == 0)
   {
     float B = atoi(args[0]);
     Serial.println("doing bright <bright 0-255> command");
@@ -257,7 +257,7 @@ void DoCommand()
     if (selectedEffect)
       selectedEffect->SetBrightness(B);
   }
- else if (strcmp(command,"pal") == 0)
+  else if (strcmp(command, "pal") == 0)
   {
     float B = atoi(args[0]);
     Serial.println("doing pal <pal 0-2> command");
@@ -265,15 +265,15 @@ void DoCommand()
     if (selectedEffect)
       selectedEffect->SetPal(B);
   }
-  else if (strcmp(command,"freq") == 0)
+  else if (strcmp(command, "freq") == 0)
   {
     float F = atof(args[0]);
     Serial.println("doing freq <persecond> command");
     Serial.println(F);
     if (selectedEffect)
       selectedEffect->SetFrequency(F);
-  }  
-  else if (strcmp(command,"fadetime") == 0)
+  }
+  else if (strcmp(command, "fadetime") == 0)
   {
     float F = atof(args[0]);
     Serial.println("doing fadetime  <seconds> command");
@@ -281,60 +281,60 @@ void DoCommand()
     if (selectedEffect)
       selectedEffect->SetFadeTime(F);
   }
-  else if (strcmp(command,"select") == 0)
+  else if (strcmp(command, "select") == 0)
   {
     Serial.println("doing select <effect> command");
     SelectEffect(args[0]);
   }
-  else if (strcmp(command,"selectslot") == 0)
+  else if (strcmp(command, "selectslot") == 0)
   {
     Serial.println("doing selectslot <slot> command");
     int slot = atoi(args[0]);
-    if (slot >=0 && slot < 3)
+    if (slot >= 0 && slot < 3)
       selectedEffect = currenteffects[slot];
   }
-  else if (strcmp(command,"seteffect") == 0)
+  else if (strcmp(command, "seteffect") == 0)
   {
     int slot = atoi(args[0]);
     if (slot < 0 || slot > 2) goto ERR;
     Serial.println("doing seteffect <slot> <effect> command");
-    SetEffect(slot,args[1]);
+    SetEffect(slot, args[1]);
     if (currenteffects[slot] != NULL)
       currenteffects[slot]->SetBuffer(leds[slot]);
   }
-  else if (strcmp(command,"blendmode") == 0)
+  else if (strcmp(command, "blendmode") == 0)
   {
     Serial.println("doing blendmode <slot> <mode> command");
     int slot = atoi(args[0]);
     int mode = atoi(args[1]);
-    SetBlendMode(slot,mode);
+    SetBlendMode(slot, mode);
   }
-  else if (strcmp(command,"clearmode") == 0)
+  else if (strcmp(command, "clearmode") == 0)
   {
     Serial.println("doing clearmode <slot> <mode> command");
     int slot = atoi(args[0]);
     int mode = atoi(args[1]);
-    SetClearMode(slot,mode);
+    SetClearMode(slot, mode);
   }
-  else if (strcmp(command,"globalbright") == 0)
+  else if (strcmp(command, "globalbright") == 0)
   {
     Serial.println("doing globalbright command");
     int bright = atoi(args[0]);
     FastLED.setBrightness(bright);
   }
-  else if (strcmp(command,"delay") == 0)
+  else if (strcmp(command, "delay") == 0)
   {
     Serial.println("doing delay <seconds> command");
     float delay = atof(args[0]);
 
-    micsToPause = (long)(delay*1000000.0f);
+    micsToPause = (long)(delay * 1000000.0f);
   }
-  else if (strcmp(command,"state") == 0)
+  else if (strcmp(command, "state") == 0)
   {
     Serial.println("doing print state command");
     PrintState();
   }
-  else if (strcmp(command,"help") == 0)
+  else if (strcmp(command, "help") == 0)
   {
     Serial.println("doing print help command");
     PrintHelp();
@@ -342,15 +342,15 @@ void DoCommand()
 
   goto DONE;
 
-  ERR:
+ERR:
   Serial.println("Syntax error in command processor!");
 
-  DONE:
+DONE:
 
-// Reset the command collectors
+  // Reset the command collectors
   numInput = 0;
   numArgs = 0;
-  for (int i=0; i<MAX_ARGS; i++) args[i] = NULL;
+  for (int i = 0; i < MAX_ARGS; i++) args[i] = NULL;
   command = NULL;
 }
 
@@ -360,27 +360,27 @@ bool ReadOneScriptLine()
 
   while (scriptBufIndex < scriptBufSize)
   {
-          char c = scriptBuf[scriptBufIndex++];
-          if (c == '\n')
-          {
-            inputBuffer[numInput++] = 0;
-            Serial.println("command entered!");
-            DoCommand();
-            return true;
-          }
-          else if (numInput < MAX_BUF)
-          {
-                inputBuffer[numInput++] = c;
-          }
-          else
-          {
-            Serial.println("Input buffer overflow!");
-            numInput = 0;
-            numArgs = 0;
-            for (int i=0; i<MAX_ARGS; i++) args[i] = NULL;
-            command = NULL;
-            return false;
-          }    
+    char c = scriptBuf[scriptBufIndex++];
+    if (c == '\n')
+    {
+      inputBuffer[numInput++] = 0;
+      Serial.println("command entered!");
+      DoCommand();
+      return true;
+    }
+    else if (numInput < MAX_BUF)
+    {
+      inputBuffer[numInput++] = c;
+    }
+    else
+    {
+      Serial.println("Input buffer overflow!");
+      numInput = 0;
+      numArgs = 0;
+      for (int i = 0; i < MAX_ARGS; i++) args[i] = NULL;
+      command = NULL;
+      return false;
+    }
   }
   return false; // Must be done with data
 }
@@ -401,43 +401,43 @@ void RunScript()
   scriptBufSize = file.size();
   Serial.print("File size is: "); Serial.println(scriptBufSize);
   Serial.println("Reading file");
-  file.read(scriptBuf,scriptBufSize);
+  file.read(scriptBuf, scriptBufSize);
   while (ReadOneScriptLine())
   {
     Serial.println("Processed one script line");
-  }  
+  }
 }
 
 
 bool ProcessInput(unsigned long mics)
 {
-    if (micsToPause > 0)
-    {
-      micsToPause -= mics;
-      if (micsToPause > 0) return false;
-    }
+  if (micsToPause > 0)
+  {
+    micsToPause -= mics;
+    if (micsToPause > 0) return false;
+  }
 
-    while (Serial.available() > 0) {
-            // read the incoming byte:
-      char c = Serial.read();
-      if (c == '\n')
-      {
-        inputBuffer[numInput++] = 0;
-        Serial.println("command entered!");
-        DoCommand();
-        return true;
-      }
-      else if (numInput < MAX_BUF)
-      {
-            inputBuffer[numInput++] = c;
-      }
-      else
-      {
-        Serial.println("Input buffer overflow!");
-        numInput = 0;
-      }
+  while (Serial.available() > 0) {
+    // read the incoming byte:
+    char c = Serial.read();
+    if (c == '\n')
+    {
+      inputBuffer[numInput++] = 0;
+      Serial.println("command entered!");
+      DoCommand();
+      return true;
     }
-    return false;
+    else if (numInput < MAX_BUF)
+    {
+      inputBuffer[numInput++] = c;
+    }
+    else
+    {
+      Serial.println("Input buffer overflow!");
+      numInput = 0;
+    }
+  }
+  return false;
 }
 
-  #endif
+#endif

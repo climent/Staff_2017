@@ -14,113 +14,113 @@ class drops : public effect
 {
 
 
-unsigned long micsperspark = 1000000; // one per second by default
-unsigned long nextsparktime = 0;
+    unsigned long micsperspark = 1000000; // one per second by default
+    unsigned long nextsparktime = 0;
 
-// This array is the locations and intensities of the drops. They move and decrease in intensity during animation
-drop droparray[MAX_DROPS];
+    // This array is the locations and intensities of the drops. They move and decrease in intensity during animation
+    drop droparray[MAX_DROPS];
 
-unsigned char palIndex = 0;
+    unsigned char palIndex = 0;
 
   public:
-  
-	void Init()
-	{
-	}
 
-  String Identify()
-  {
-    return "drops";
-  }
+    void Init()
+    {
+    }
 
-  void Reset()
-  {
-    micsperspark = ONEMIL;
-    nextsparktime = 0;
-    palIndex = 0;
-  }
+    String Identify()
+    {
+      return "drops";
+    }
 
-  void SetFrequency(float f)
-  {
-    effect::SetFrequency(f);
+    void Reset()
+    {
+      micsperspark = ONEMIL;
+      nextsparktime = 0;
+      palIndex = 0;
+    }
+
+    void SetFrequency(float f)
+    {
+      effect::SetFrequency(f);
       // How many mics to wait til next spark
-      micsperspark = (unsigned long)((1.0f/f) * 1000000.0f);
-  }
-
-  int FindFreeDrop()
-  {
-    for (int i=0; i<MAX_DROPS; i++)
-    {
-      if (droparray[i].intensity <= 0.0f)
-        return i;
-    }
-    return -1;
-  }
-
-	void Animate(unsigned long mics)
-	{
-    unsigned long curmics = micros();
-    float deltaseconds = (float)(mics)/1000000.0f;
-    float deltapos = deltaseconds * speed;
-
-    // Move the existing drops
-    for (int i=0; i<MAX_DROPS; i++)
-    {
-      // Move the drops down
-      if (droparray[i].location < 0.5f)
-      {
-        droparray[i].location -= deltapos;
-        if (droparray[i].location <= 0.0f)
-          droparray[i].intensity = 0.0f;
-      }
-      else
-      {
-        droparray[i].location += deltapos;
-        if (droparray[i].location >= 1.0f)
-          droparray[i].intensity = 0.0f;
-      }
-
-      float fadeamount = deltaseconds / fadetime; // use a fade rate
-      droparray[i].intensity -= fadeamount;
-
+      micsperspark = (unsigned long)((1.0f / f) * 1000000.0f);
     }
 
-    // Gen a drop when it is time
-    if (curmics > nextsparktime)
+    int FindFreeDrop()
     {
-      int whichDrop = FindFreeDrop();
-      if (whichDrop >= 0)
+      for (int i = 0; i < MAX_DROPS; i++)
       {
-        // Set up a new drop
-        droparray[whichDrop].intensity = 1.0f;
-        droparray[whichDrop].location = frand(0.4f,0.6f);
+        if (droparray[i].intensity <= 0.0f)
+          return i;
       }
-      nextsparktime = curmics + micsperspark;
+      return -1;
     }
-	}
 
-	void Render()
-	{
-
-    FadeOrClear();
-
-    for (int i=0; i<MAX_DROPS; i++)
+    void Animate(unsigned long mics)
     {
-      if (droparray[i].intensity > 0.0f)
+      unsigned long curmics = micros();
+      float deltaseconds = (float)(mics) / 1000000.0f;
+      float deltapos = deltaseconds * speed;
+
+      // Move the existing drops
+      for (int i = 0; i < MAX_DROPS; i++)
       {
-        int whichLed = (int)(droparray[i].location * NUM_LEDS/2);
-        if (whichLed >= 0 && whichLed < NUM_LEDS)
+        // Move the drops down
+        if (droparray[i].location < 0.5f)
         {
-          CRGB rgb = finalPalette[pal][palIndex++];
-          CHSV fadedColor = rgb2hsv(rgb);
-          fadedColor.v = (int)(droparray[i].intensity * 255.0f);
-          //dst[whichLed] = fadedColor;
-          SetPixel(whichLed,fadedColor);
+          droparray[i].location -= deltapos;
+          if (droparray[i].location <= 0.0f)
+            droparray[i].intensity = 0.0f;
+        }
+        else
+        {
+          droparray[i].location += deltapos;
+          if (droparray[i].location >= 1.0f)
+            droparray[i].intensity = 0.0f;
+        }
+
+        float fadeamount = deltaseconds / fadetime; // use a fade rate
+        droparray[i].intensity -= fadeamount;
+
+      }
+
+      // Gen a drop when it is time
+      if (curmics > nextsparktime)
+      {
+        int whichDrop = FindFreeDrop();
+        if (whichDrop >= 0)
+        {
+          // Set up a new drop
+          droparray[whichDrop].intensity = 1.0f;
+          droparray[whichDrop].location = frand(0.4f, 0.6f);
+        }
+        nextsparktime = curmics + micsperspark;
+      }
+    }
+
+    void Render()
+    {
+
+      FadeOrClear();
+
+      for (int i = 0; i < MAX_DROPS; i++)
+      {
+        if (droparray[i].intensity > 0.0f)
+        {
+          int whichLed = (int)(droparray[i].location * NUM_LEDS / 2);
+          if (whichLed >= 0 && whichLed < NUM_LEDS)
+          {
+            CRGB rgb = finalPalette[pal][palIndex++];
+            CHSV fadedColor = rgb2hsv(rgb);
+            fadedColor.v = (int)(droparray[i].intensity * 255.0f);
+            //dst[whichLed] = fadedColor;
+            SetPixel(whichLed, fadedColor);
+          }
         }
       }
-    }  
-	}
+    }
 
-  
+
 } drops;
 #endif

@@ -34,7 +34,8 @@ void UpdateMotion(unsigned long mics)
     // Read the motion sensors
     imu.readMotionSensor(ax, ay, az, gx, gy, gz, mx, my, mz);
 
-  //Serial.println(ax);
+//  Serial.print("updated motion:");
+//  Serial.println(ax);
 
     if (ax > maxAx) maxAx = ax;
     if (ay > maxAx) maxAy = ay;
