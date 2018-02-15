@@ -1,5 +1,5 @@
-#ifndef CRACKLE_H
-#define CRACKLE_H
+#ifndef CRACKLES_H
+#define CRACKLES_H
 #include "commonheaders.h"
 
 class crackles : public effect

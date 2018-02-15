@@ -12,16 +12,13 @@ char *command;
 char *args[MAX_ARGS];
 int numArgs = 0;
 
-
 char scriptBuf[1024]; // Maximum script length of 1K for now
 int scriptBufIndex = 0;
 int scriptBufSize = 0;
 
-long micsToPause = 0; // A master pause control that can serve as a "delay" command during script execution
-
+long micsToPause = 10000000; // A master pause control that can serve as a "delay" command during script execution
 
 effect* selectedEffect = NULL;
-
 
 effect* EffectByName(const char* name)
 {
@@ -64,6 +61,7 @@ void SetEffect(int slot, const char *name)
   selectedEffect = EffectByName(name);
   if (selectedEffect != NULL)
     currenteffects[slot] = selectedEffect;
+    Serial.print("Setting effect: "); Serial.println(name);
 }
 
 void SetBlendMode(int slot, int mode)
@@ -71,6 +69,7 @@ void SetBlendMode(int slot, int mode)
   if (slot < 0 || slot > 1) return;
   if (mode < 0 || mode > kOff) return;
   blendmodes[slot] = static_cast<MixMode>(mode);
+  Serial.print("Setting blendmode: "); Serial.println(mode);
 }
 
 void SetClearMode(int slot, int mode)
@@ -115,7 +114,6 @@ void SetFrequency(int slot, float freq)
   }
 }
 
-
 void SetWidth(int slot, float w)
 {
   if (slot < 0 || slot > 1) return;
@@ -126,15 +124,12 @@ void SetWidth(int slot, float w)
   }
 }
 
-
 void SplitCommand()
 {
-
   numArgs = 0;
   command = strtok (inputBuffer, "  ,");
   //  Serial.print("command is: "); Serial.println(command);
   if (command == NULL) return;
-
   do {
     args[numArgs] = strtok (NULL, " ,");
     numArgs++;
@@ -159,7 +154,6 @@ void PrintState()
   }
   else Serial.println("NULL");
 
-
   Serial.print("selectedEffect: ");
   if (selectedEffect != NULL)
   {
@@ -167,11 +161,9 @@ void PrintState()
   }
   else Serial.println("NULL");
 
-
   Serial.println("blendmodes: ");
   Serial.println(blendmodes[0]);
   Serial.println(blendmodes[1]);
-
 }
 
 void PrintHelp()
@@ -326,7 +318,6 @@ void DoCommand()
   {
     Serial.println("doing delay <seconds> command");
     float delay = atof(args[0]);
-
     micsToPause = (long)(delay * 1000000.0f);
   }
   else if (strcmp(command, "state") == 0)
@@ -339,7 +330,6 @@ void DoCommand()
     Serial.println("doing print help command");
     PrintHelp();
   }
-
   goto DONE;
 
 ERR:
@@ -408,7 +398,6 @@ void RunScript()
   }
 }
 
-
 bool ProcessInput(unsigned long mics)
 {
   if (micsToPause > 0)
@@ -416,6 +405,7 @@ bool ProcessInput(unsigned long mics)
     micsToPause -= mics;
     if (micsToPause > 0) return false;
   }
+
 
   while (Serial.available() > 0) {
     // read the incoming byte:

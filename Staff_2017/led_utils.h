@@ -1,7 +1,5 @@
-
 #ifndef LEDUTILS_H
 #define LEDUTILS_H
-
 
 void Overwrite (CRGB* src, CRGB* dst)
 {
@@ -15,7 +13,6 @@ void BlendHalf (CRGB* src, CRGB* dst)
   {
     dst[i] = blend( dst[i], src[i], 128 ); // <<TODO>> Make a version that does a variable blend!
   }
-
 }
 
 void WriteOneChannel (CRGB* src, CRGB* dst, int channel)
@@ -29,8 +26,8 @@ void WriteOneChannel (CRGB* src, CRGB* dst, int channel)
     else if (channel == 2)
       dst[i].b = src[i].b;
   }
-
 }
+
 void WriteIfNonBlack (CRGB* src, CRGB* dst, int channel)
 {
   for (int i = 0; i < NUM_LEDS; i++)
@@ -38,7 +35,6 @@ void WriteIfNonBlack (CRGB* src, CRGB* dst, int channel)
     if (src[i].r > 12 || src[i].g > 12 || src[i].b > 12)
       dst[i] = src[i];
   }
-
 }
 
 void BlendIfBrighter (CRGB* src, CRGB* dst)
@@ -145,13 +141,11 @@ void Test(CRGB* dst)
   Blackout(dst);
 }
 
-
 void SafeSetLed(CRGB* dst, int i, CRGB c)
 {
   if (i >= 0 && i < NUM_LEDS)
     dst[i] = c;
 }
-
 
 void SafeShow()
 {
@@ -159,7 +153,6 @@ void SafeShow()
 }
 
 // Some utils to get normed values of height and angle (around staff) based on led index i
-
 float GetHeight(int i)
 {
   float p = (float)(i) / (float)(NUM_LEDS);
@@ -193,8 +186,6 @@ float GetAngle(int i)
   while (p > 1.0f)
     p -= 1.0f;
   return p;
-
 }
-
 
 #endif

@@ -34,8 +34,8 @@ void UpdateMotion(unsigned long mics)
     // Read the motion sensors
     imu.readMotionSensor(ax, ay, az, gx, gy, gz, mx, my, mz);
 
-//  Serial.print("updated motion:");
-//  Serial.println(ax);
+//    Serial.print("updated motion: ");
+//    Serial.println(ax);
 
     if (ax > maxAx) maxAx = ax;
     if (ay > maxAx) maxAy = ay;
@@ -70,9 +70,8 @@ void UpdateMotion(unsigned long mics)
       gotFlipped = true;
     }
 
-
     // Update the SensorFusion filter
-    //filter.update(gx, gy, gz, ax, ay, az, mx, my, mz);
+    filter.update(gx, gy, gz, ax, ay, az, mx, my, mz);
   }
 }
 
@@ -92,5 +91,4 @@ void getOrientation(float *roll, float *pitch, float *heading, float *x, float *
     *z = (float)-(cos(pitchRads)*cos(headRads));
 }
 
-
-  #endif
+#endif

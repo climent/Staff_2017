@@ -37,28 +37,30 @@ unsigned char work[kMatrixHeight][kMatrixWidth];
 // It is TOTALLY not orthogonal and even. It massively skewed, due to the winding nature of the leds strips. BUT, still useful for mapping 2D effects (noise etc) to the staff
 unsigned char test[kMatrixHeight][kMatrixWidth];
 
+bool enableBaseChange = false;
 
 // The effect classes
-#include "Crackle.h"
-#include "drops.h"
-#include "modchase.h"
-#include "pulse.h"
-#include "pools.h"
-#include "everyn.h"
-#include "throb.h"
-#include "pmarch.h"
-#include "fluid.h"
-#include "sparks.h"
-#include "crawl.h"
-#include "flame.h"
-#include "image.h"
-#include "null.h"
+#include "ef_crackles.h"
+#include "ef_drops.h"
+#include "ef_modchase.h"
+#include "ef_pulse.h"
+#include "ef_pools.h"
+#include "ef_everyn.h"
+#include "ef_throb.h"
+#include "ef_pmarch.h"
+#include "ef_fluid.h"
+#include "ef_sparks.h"
+#include "ef_crawl.h"
+#include "ef_flame.h"
+#include "ef_image.h"
+#include "ef_null.h"
 
 static const int numEffects = 12;
 
 effect* effectTable[numEffects] =
 {
-  &crackles, &drops, &modchase, &pulse, &pools, &everyn, &throb, &pmarch, &fluid, &crawl, &flame, &image
+  &crackles,&drops, &modchase, &pulse, &pools, &everyn, &throb, &pmarch,
+  &fluid, &crawl, &flame, &image
 };
 
 effect* baseEffects[7] =
@@ -107,7 +109,7 @@ class controller : public effect
       crackles.SetPal(1);
       crackles.SetClearMode(kFade);
 
-      // THis effect sucks right now. quick fix or ditch
+      // This effect sucks right now. quick fix or ditch
       drops.Init();
       drops.SetFrequency(2.0f); // Launches per second
       drops.SetFadeTime(2.0f);
@@ -251,7 +253,7 @@ class controller : public effect
 
       // periodically change the base layer effect
       micsTilBaseChange -= mics;
-      if (micsTilBaseChange <= 0)
+      if (micsTilBaseChange <= 0 && enableBaseChange)
       {
 
         int newBase = random(0, 7);

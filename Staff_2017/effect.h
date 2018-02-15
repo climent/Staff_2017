@@ -136,6 +136,8 @@ class effect
             }
             break;
           }
+        case effect::MirrorMode::kFlipAndMirror:
+          break;
       }
     }
 
@@ -153,6 +155,5 @@ class effect
       Serial.print("    "); Serial.print("mirrormode: "); Serial.println(mirrormode);
 
     }
-
 };
 #endif

@@ -1,4 +1,3 @@
-
 #include "FastLED.h"
 #include "power_mgt.h"
 
@@ -14,8 +13,8 @@ const int FlashChipSelect = 6; // digital pin for flash chip CS pin
 bool aggressive = true;
 
 // Done as two spirals, down and back
-#define NUM_LEDS 160
-#define DATA_PIN 8
+#define NUM_LEDS 304
+#define DATA_PIN 7
 //#define CLOCK_PIN 13
 
 // motion stuff
@@ -47,7 +46,6 @@ int bumpCounterTimeout = 0;
 #include "controls.h"
 #include "commands.h"
 
-
 void setup ()
 {
   Serial.begin(115200);
@@ -70,7 +68,7 @@ void setup ()
   filter.begin(100);
 
   // Run a color check and strip test
-  //Test(leds[3]);
+//  Test(leds[3]);
 
   // Create a bunch of palettes to use
   GenerateGlobalPalettes();
@@ -78,11 +76,9 @@ void setup ()
   // Init all the effects and the controller that drives/animates them
   controller.Init();
 
-
   if (!SerialFlash.begin(FlashChipSelect)) {
     Serial.println("Unable to access SPI Flash chip");
   }
-
 
   //  RunScript();
 }
@@ -152,7 +148,8 @@ void loop ()
     gotBumped = false;
     gotBumpedGate = 600; // 600 ms until we can get another bump
     bumpCounterTimeout = 2000; // two second after last bump we will accept the command
-    //    Serial.println("gotBumped!");
+
+    Serial.println("gotBumped!");
     //    Serial.print("maxAx: "); Serial.println(maxAx);
     //    Serial.print("maxAy: "); Serial.println(maxAy);
     //    Serial.print("maxAz: "); Serial.println(maxAz);
@@ -160,6 +157,7 @@ void loop ()
     //    Serial.print("minAx: "); Serial.println(minAx);
     //    Serial.print("minAy: "); Serial.println(minAy);
     //    Serial.print("minAz: "); Serial.println(minAz);
+
     maxAx = 0.0;
     maxAy = 0.0;
     maxAz = 0.0;
@@ -170,28 +168,30 @@ void loop ()
 
   if (bumpCounterTimeout <= 0 && numBumps > 0)
   {
-    //Serial.printf("Got bump command: %d bumps\n",numBumps);
+    Serial.printf("Got bump command: %d bumps\n",numBumps);
     numBumps = 0;
   }
 
   // Handle inputs
   ProcessInput(deltamics);
 
-
   if (timeTillPrint <= 0)
   {
-    timeTillPrint = 1000;
+    timeTillPrint = 10000;
 
     Serial.print("frames per sec: "); Serial.println(frameCount / 10);
     frameCount = 0;
     Serial.print("rendered frames: "); Serial.println(renderCount / 10);
     renderCount = 0;
+    Serial.print("deltamics: "); Serial.println(deltamics);
+    Serial.print("micsToPause: ");Serial.println(micsToPause);
+    Serial.print("Serial available: ");Serial.println(Serial.available());
 
     //Serial.print("x: "); Serial.println(x);
     //Serial.print("y: "); Serial.println(y);
     //Serial.print("z: "); Serial.println(z);
 
-#if 1
+#if 0
     Serial.print("Orientation: ");
     Serial.print(heading);
     Serial.print(" ");
@@ -204,7 +204,7 @@ void loop ()
   if (timeTillOrientation <= 0)
   {
     // Update the orientation
-//        getOrientation(&roll,&pitch,&heading,&x,&y,&z);
+    getOrientation(&roll,&pitch,&heading,&x,&y,&z);
     timeTillOrientation = 16;
   }
 
@@ -215,7 +215,7 @@ void loop ()
   if (timeTillRender <= 0)
   {
     renderCount++;
-    timeTillRender = 16;
+    timeTillRender = 8;
     controller.Render();
     show_at_max_brightness_for_power();
   }
