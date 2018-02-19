@@ -4,12 +4,12 @@
 
 class crackles : public effect
 {
-    unsigned long micsperspark = ONEMIL; // one per second by default
-    long micstilspark = 0;
-    unsigned char palIndex = 0;
-    uint8_t numsparkstoemit = 0;
-    float emitLoc = 0.0f;
-    bool randDir = true;
+  unsigned long micsperspark = ONEMIL; // one per second by default
+  long micstilspark = 0;
+  unsigned char palIndex = 0;
+  uint8_t numsparkstoemit = 0;
+  float emitLoc = 0.0f;
+  bool randDir = true;
 
   public:
 
@@ -60,7 +60,7 @@ class crackles : public effect
       {
         CRGB rgb = finalPalette[pal][palIndex++];
 
-        // <<TODO>> Create interesting fronts that migrate around in a complex way
+        // TODO: Create interesting fronts that migrate around in a complex way
         int iLoc = (int)(emitLoc * NUM_LEDS / 2);
         if (random8() > 128) iLoc = NUM_LEDS - iLoc - 1;
         // Add random distribution +/- 8 leds (one wrap)
@@ -79,9 +79,7 @@ class crackles : public effect
         }
         numsparkstoemit--;
       }
-
     }
-
 
 } crackles;
 #endif

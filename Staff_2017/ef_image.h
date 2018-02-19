@@ -9,15 +9,13 @@ class image : public effect
 public:
 
 uint8_t palIndex = 255;
-
 unsigned long micsperemit = ONEMIL;
 int timeTillEmit = 0;
-uint8_t startIndex = 0; // this is where in the palette we start, cycle this slowly to 255 and wrap around 
+uint8_t startIndex = 0; // this is where in the palette we start, cycle this slowly to 255 and wrap around
 bool emit = false;
 
-  public:
+public:
 
-  
 	void Init(int shiftpersec)
 	{
     // How many mics to wait til next change
@@ -38,7 +36,6 @@ bool emit = false;
     timeTillEmit = 0;
 
   }
-
 
   void SetSpeed(float ledspersec)
   {
@@ -92,8 +89,6 @@ bool emit = false;
         // if this entry is on fire, look to nearby entries, and with varying probability, set them alight as well
         // if the entry is dead/burned out, skip it
         if (board[y][x] == 0) continue;
-
-
 
         if (board[y][x] == 128)
         {
@@ -154,7 +149,7 @@ bool emit = false;
             board[y][x] = 127; // Flame out if a lonely spark with nowhere to go :)
         }
       }
-    }      
+    }
 
     if (!stillBurning)
       SetupFlameFront(); // start again!
@@ -175,15 +170,15 @@ bool emit = false;
         uint32_t real_x = (x + shift_x) * scale;                  // calculate the coordinates within the noise field
         uint32_t real_y = (y + shift_y) * scale;                  // based on the precalculated positions
         uint32_t real_z = 4223;
-        
+
         uint8_t noise = inoise16(real_x, real_y, real_z) >> 8;    // get the noise data and scale it down
 
         uint8_t index = sin8(noise*3);                            // map led color based on noise data
-        uint8_t bri   = noise;
+        // uint8_t bri   = noise;
 
         board[y][x] = index;
       }
-    }   
+    }
   }
 
 
@@ -193,25 +188,25 @@ bool emit = false;
 
     //DoFlameFront();
 
-//Serial.printf("Starting render...\n");
-  for (int i=0; i<NUM_LEDS; i++)
-  {
-    // Each led has a height and width that we can use to find the best render value
-    int y = (int)(GetHeight(i) * kMatrixHeight);
-    int x = (int)(GetAngle(i) * kMatrixWidth);
-    // get the burning value
-    uint8_t bv = board[y][x];
-    //Serial.printf("bv : %d\n",bv);
-    if (bv == 128 || bv == 127) // burning 
+    //Serial.printf("Starting render...\n");
+    for (int i=0; i<NUM_LEDS; i++)
     {
-      dst[i] = finalPalette[0][work[y][x]--];
+      // Each led has a height and width that we can use to find the best render value
+      int y = (int)(GetHeight(i) * kMatrixHeight);
+      int x = (int)(GetAngle(i) * kMatrixWidth);
+      // get the burning value
+      uint8_t bv = board[y][x];
+      //Serial.printf("bv : %d\n",bv);
+      if (bv == 128 || bv == 127) // burning
+      {
+        dst[i] = finalPalette[0][work[y][x]--];
+      }
+      if (work[y][x] == 0) // passed the fire on to others, can flame out now
+        board[y][x] = 0; // burn out
+
     }
-    if (work[y][x] == 0) // passed the fire on to others, can flame out now
-      board[y][x] = 0; // burn out
-    
-  }    
 
   }
-  
+
 } image;
 #endif

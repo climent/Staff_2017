@@ -12,7 +12,12 @@ CHSV hsvYellow = CHSV(HUE_YELLOW, 255, 255);
 
 void PrintColor(CRGB c)
 {
-  Serial.print("color: "); Serial.print(c.r); Serial.print(", "); Serial.print(c.g); Serial.print(", "); Serial.println(c.b);
+  Serial.print("color: ");
+  Serial.print(c.r);
+  Serial.print(", ");
+  Serial.print(c.g);
+  Serial.print(", ");
+  Serial.println(c.b);
 }
 
 void PrintColor(CHSV c)

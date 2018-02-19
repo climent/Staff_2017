@@ -2,30 +2,29 @@
 #define MOTION_H
 
 // Motion stuff
-
 #include <NXPMotionSense.h>
 #include <Wire.h>
 #include <EEPROM.h>
 
-
 NXPMotionSense imu;
 NXPSensorFusion filter;
-  float ax, ay, az;
-  float gx, gy, gz;
-  float mx, my, mz;
 
-  float minAx = 0.0f;
-  float maxAx = 0.0f;
-  float minAy = 0.0f;
-  float maxAy = 0.0f;
-  float minAz = 0.0f;
-  float maxAz = 0.0f;
+float ax, ay, az;
+float gx, gy, gz;
+float mx, my, mz;
 
-  bool gotBumped = false;
-  bool gotFlipped = false;
+float minAx = 0.0f;
+float maxAx = 0.0f;
+float minAy = 0.0f;
+float maxAy = 0.0f;
+float minAz = 0.0f;
+float maxAz = 0.0f;
 
-  bool rightSideUp = true;
-  unsigned long micsInOtherOrientation = 0;
+bool gotBumped = false;
+bool gotFlipped = false;
+
+bool rightSideUp = true;
+unsigned long micsInOtherOrientation = 0;
 
 void UpdateMotion(unsigned long mics)
 {
@@ -62,7 +61,8 @@ void UpdateMotion(unsigned long mics)
     else
       micsInOtherOrientation = 0;
 
-    // If we are in the opposite orientation rather vertically for 5 seconds, change state!
+    // If we are in the opposite orientation rather vertically for 5 seconds,
+     // change state!
     if (micsInOtherOrientation > 1000000 * 5)
     {
       Serial.println("Flipped!\n");
@@ -75,7 +75,8 @@ void UpdateMotion(unsigned long mics)
   }
 }
 
-void getOrientation(float *roll, float *pitch, float *heading, float *x, float *y, float *z)
+void getOrientation(float *roll, float *pitch, float *heading,
+                    float *x, float *y, float *z)
 {
     // print the heading, pitch and roll
     *roll = filter.getRoll() + 180.0f;

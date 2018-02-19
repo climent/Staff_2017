@@ -33,8 +33,11 @@ static const int kMatrixHeight = 70;
 unsigned char board[kMatrixHeight][kMatrixWidth];
 unsigned char work[kMatrixHeight][kMatrixWidth];
 
-// For checking the mapping of leds to board locations. With 8x70 and a slight adjustment to GetHeight(), we have a very close mapping
-// It is TOTALLY not orthogonal and even. It massively skewed, due to the winding nature of the leds strips. BUT, still useful for mapping 2D effects (noise etc) to the staff
+// For checking the mapping of leds to board locations. With 8x70 and a slight
+// adjustment to GetHeight(), we have a very close mapping
+// It is TOTALLY not orthogonal and even. It massively skewed, due to the
+// winding nature of the leds strips. BUT, still useful for mapping 2D effects
+// (noise etc) to the staff
 unsigned char test[kMatrixHeight][kMatrixWidth];
 
 bool enableBaseChange = false;
@@ -54,40 +57,47 @@ bool enableBaseChange = false;
 #include "ef_flame.h"
 #include "ef_image.h"
 #include "ef_null.h"
+#include "ef_sand.h"
 
-static const int numEffects = 12;
+//static const int numEffects = 14;
 
-effect* effectTable[numEffects] =
+effect* effectTable[] =
 {
   &crackles,&drops, &modchase, &pulse, &pools, &everyn, &throb, &pmarch,
-  &fluid, &crawl, &flame, &image
+  &fluid, &crawl, &flame, &image, &sand, &sparks
 };
+const byte numEffects = (sizeof(effectTable) / sizeof(effectTable[0]));
 
-effect* baseEffects[7] =
+effect* baseEffects[] =
 {
-  &pulse, &pools, &throb, &pmarch, &fluid, &image, &null
+  &pulse, &pools, &throb, &pmarch, &fluid, &image, &sand, &null
 };
+const byte numBaseEffects = (sizeof(baseEffects) / sizeof(baseEffects[0]));
 
-effect* layerEffects[7] =
+effect* layerEffects[] =
 {
-  &crackles, &drops, &modchase, &everyn, &crawl, &flame, &null
+  &crackles, &drops, &modchase, &everyn, &crawl, &flame, &sparks, &null
 };
+const byte numLayerEffects = (sizeof(layerEffects) / sizeof(layerEffects[0]));
 
 class controller : public effect
 {
 
   public:
     // Palette animation timer
-    static const unsigned long micsPerPalchange = 1000000 * 10; // 10 seconds between pal changes (change to random later)
+    // 10 seconds between pal changes (change to random later)
+    static const unsigned long micsPerPalchange = 1000000 * 10;
     long micsTilPalChange = micsPerPalchange;
     uint8_t curPal = 0;
 
-    static const unsigned long micsPerBasechange = 1000000 * 27; // 10 seconds between pal changes (change to random later)
+    // 10 seconds between base effect changes (change to random later)
+    static const unsigned long micsPerBasechange = 1000000 * 27;
     long micsTilBaseChange = micsPerBasechange;
 
     void Init()
     {
-      // A "blank" effect for simplicity and to avoid loads of NULL checks everywhere
+      // A "blank" effect for simplicity and to avoid loads of NULL checks
+      // everywhere
       null.Init();
       null.SetClearMode(kFade);
       null.SetFadeTime(4.0f);
@@ -101,6 +111,7 @@ class controller : public effect
       sparks.SetMirrorMode(kMirror);
       sparks.SetClearMode(kFade);
       sparks.SetPal(1);
+      sparks.SetSpeed(30);
 
       // Redesign this to do lots of fireworks kinda stuff like the umbrealla
       crackles.Init();
@@ -133,6 +144,11 @@ class controller : public effect
       crawl.SetClearMode(kFade);
       crawl.SetPal(1);
 
+      // ef_sand
+      sand.Init();
+      sand.SetPal(1);
+      sand.SetClearMode(kFade);
+
       //=======================
       // BASE effects
       //=======================
@@ -153,7 +169,6 @@ class controller : public effect
       pulse.SetFadeTime(0.1f);
       pulse.SetBuffer(leds[0]);
       pulse.SetClearMode(kFade);
-
 
       pools.Init();
       pools.SetBrightness(32);
@@ -241,11 +256,14 @@ class controller : public effect
           // For now change all palettes
           //Serial.printf("Changing palettes...\n");
           int newpal = random(0, kNumPalettes);
-          palmixer.SetNewPalette(0, newpal, 4.0f); // one second fade to next palette
+          // one second fade to next palette
+          palmixer.SetNewPalette(0, newpal, 4.0f);
           newpal = random(0, kNumPalettes);
-          palmixer.SetNewPalette(1, newpal, 4.0f); // one second fade to next palette
+          // one second fade to next palette
+          palmixer.SetNewPalette(1, newpal, 4.0f);
           newpal = random(0, kNumPalettes);
-          palmixer.SetNewPalette(2, newpal, 4.0f); // one second fade to next palette
+          // one second fade to next palette
+          palmixer.SetNewPalette(2, newpal, 4.0f);
         }
 
         micsTilPalChange = micsPerPalchange;
@@ -332,7 +350,8 @@ class controller : public effect
 
 
       // Clear the mixdown target buffer
-      // NOTE: The base effects are always in overwrite mode, so this is not necessary
+      // NOTE: The base effects are always in overwrite mode, so this is not
+      // necessary
       memset(leds[kMixDownBuffer], 0, NUM_LEDS * 3);
 
       // Do the mixdown
@@ -352,7 +371,8 @@ class controller : public effect
             BlendIfBrighter(currenteffects[i]->GetBuffer(), leds[kMixDownBuffer]);
             break;
           case kWriteIfNonBlack:
-            WriteIfNonBlack(currenteffects[i]->GetBuffer(), leds[kMixDownBuffer], 0); // <<TODO>> Use variable channels
+            // <<TODO>> Use variable channels
+            WriteIfNonBlack(currenteffects[i]->GetBuffer(), leds[kMixDownBuffer], 0);
             break;
           case kOverwriteIfEven:
             OverwriteIfEven(currenteffects[i]->GetBuffer(), leds[kMixDownBuffer]);
@@ -361,7 +381,8 @@ class controller : public effect
             ChooseBrightest(currenteffects[i]->GetBuffer(), leds[kMixDownBuffer]);
             break;
           case kOverwriteIfBrighter:
-            OverwriteIfBrighter(currenteffects[i]->GetBuffer(), leds[kMixDownBuffer], 8);
+            OverwriteIfBrighter(
+              currenteffects[i]->GetBuffer(), leds[kMixDownBuffer], 8);
             break;
           case kOff:
           default:
@@ -369,10 +390,7 @@ class controller : public effect
             break;
         }
       }
-
-
     }
-
 
 } controller;
 

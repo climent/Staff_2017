@@ -8,7 +8,6 @@ const int SDchipSelect = 4;    // Audio Shield has SD card CS on pin 10
 const int FlashChipSelect = 6; // digital pin for flash chip CS pin
 //const int FlashChipSelect = 21; // Arduino 101 built-in SPI Flash
 
-
 // Global aggresive var
 bool aggressive = true;
 
@@ -40,7 +39,6 @@ int bumpCounterTimeout = 0;
 #include "effect.h"
 #include "motion.h"
 
-
 // Command processing and effect sequence control to drive the whole show
 // command sequences can come from the Serial line or from a file or data
 #include "controls.h"
@@ -51,7 +49,7 @@ void setup ()
   Serial.begin(115200);
   delay(1000); // Let the serial monitor come up
 
-  FastLED.addLeds<WS2812B, DATA_PIN, BGR>(leds[2], NUM_LEDS);
+  FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds[2], NUM_LEDS);
   FastLED.setDither(0);
   pinMode(7, OUTPUT);
   digitalWrite(7, HIGH);  // enable access to LEDs
@@ -68,7 +66,7 @@ void setup ()
   filter.begin(100);
 
   // Run a color check and strip test
-//  Test(leds[3]);
+  // Test(leds[3]);
 
   // Create a bunch of palettes to use
   GenerateGlobalPalettes();
@@ -146,8 +144,10 @@ void loop ()
   {
     numBumps++;
     gotBumped = false;
-    gotBumpedGate = 600; // 600 ms until we can get another bump
-    bumpCounterTimeout = 2000; // two second after last bump we will accept the command
+    // 600 ms until we can get another bump
+    gotBumpedGate = 600;
+    // two second after last bump we will accept the command
+    bumpCounterTimeout = 2000;
 
     Serial.println("gotBumped!");
     //    Serial.print("maxAx: "); Serial.println(maxAx);
@@ -179,13 +179,13 @@ void loop ()
   {
     timeTillPrint = 10000;
 
-    Serial.print("frames per sec: "); Serial.println(frameCount / 10);
-    frameCount = 0;
-    Serial.print("rendered frames: "); Serial.println(renderCount / 10);
-    renderCount = 0;
+    // Serial.print("frames per sec: "); Serial.println(frameCount / 10);
+    // frameCount = 0;
+    // Serial.print("rendered frames: "); Serial.println(renderCount / 10);
+    // renderCount = 0;
     Serial.print("deltamics: "); Serial.println(deltamics);
-    Serial.print("micsToPause: ");Serial.println(micsToPause);
-    Serial.print("Serial available: ");Serial.println(Serial.available());
+    // Serial.print("micsToPause: ");Serial.println(micsToPause);
+    // Serial.print("Serial available: ");Serial.println(Serial.available());
 
     //Serial.print("x: "); Serial.println(x);
     //Serial.print("y: "); Serial.println(y);
@@ -208,7 +208,9 @@ void loop ()
     timeTillOrientation = 16;
   }
 
-  // Animate the controller. This will animate any active effects, process animated palettes, lfo's, and do random or scripted switching of effects and animation of parameters
+  // Animate the controller. This will animate any active effects, process
+  // animated palettes, lfo's, and do random or scripted switching of effects
+  // and animation of parameters
   controller.Animate(deltamics);
 
   // Render all active buffers and mixdown, then show with power limits applied

@@ -56,14 +56,18 @@ class effect
     virtual void Animate(unsigned long micros);
     virtual void Render();
     virtual void SetClearMode(ClearMode mode) {
-      clearmode = mode; // Clear to black before rendering each frame, or fade old buffer contents out over time (leave trails)
+      // Clear to black before rendering each frame, or fade old buffer contents
+      // out over time (leave trails)
+      clearmode = mode;
     }
     virtual void SetMirrorMode(MirrorMode mode) {
       mirrormode = mode;
     }
 
-    // These all have default impls so that we can safely call them on effects that don't use them
-    // NOTE: Make sure these routines can be called safely while an effect is active!!
+    // These all have default impls so that we can safely call them on effects
+    // that don't use them
+    // NOTE: Make sure these routines can be called safely while an effect is
+    // active!!
     virtual void SetFrequency(float f) {
       frequency = f;
     }; // Usually in leds/sec or launches/sec etc
@@ -88,7 +92,8 @@ class effect
     }; // The time a newly lit led should take to fade to black
 
     // Some funcs used by only a few effects
-    virtual void SetSpan(int N) {}; // Set some kind of span or interval (N for mod N effects for example)
+    // Set some kind of span or interval (N for mod N effects for example)
+    virtual void SetSpan(int N) {};
     virtual void SetPal(uint8_t p) {
       pal = p;
     };
@@ -100,7 +105,9 @@ class effect
     virtual void Stop() {
       running = false;
     };
-    virtual void Reset() = 0; // Every effect must support Reset so we can start setting params and restart
+
+    // Every effect must support Reset so we can start setting params and restart
+    virtual void Reset() = 0;
 
     inline void FadeOrClear()
     {
@@ -113,7 +120,8 @@ class effect
         }
     }
 
-    // This common pixel setter allows us to tweak color as it is being rendered by the effects. In this first case, brightness
+    // This common pixel setter allows us to tweak color as it is being rendered
+    // by the effects. In this first case, brightness
     inline void SetPixel(int whichLed, CRGB c)
     {
       dst[whichLed] = c;
@@ -141,7 +149,8 @@ class effect
       }
     }
 
-    void PrintState()
+    // Some effects have extra parameters, so this should be a virtual.
+    virtual void PrintState()
     {
       Serial.print(Identify()); Serial.println(": ");
       Serial.print("    "); Serial.print("frequency: "); Serial.println(frequency);

@@ -16,7 +16,9 @@ char scriptBuf[1024]; // Maximum script length of 1K for now
 int scriptBufIndex = 0;
 int scriptBufSize = 0;
 
-long micsToPause = 10000000; // A master pause control that can serve as a "delay" command during script execution
+// A master pause control that can serve as a "delay" command during script
+// execution
+long micsToPause = 0;
 
 effect* selectedEffect = NULL;
 
@@ -35,6 +37,9 @@ effect* EffectByName(const char* name)
   else if (strcmp(name, "fluid") == 0) return &fluid;
   else if (strcmp(name, "crawl") == 0) return &crawl;
   else if (strcmp(name, "flame") == 0) return &flame;
+  else if (strcmp(name, "sand") == 0) return &sand;
+  else if (strcmp(name, "sparks") == 0) return &sparks;
+  else if (strcmp(name, "image") == 0) return &image;
   else if (strcmp(name, "null") == 0) return &null;
   else if (strcmp(name, "random") == 0)
   {
@@ -46,7 +51,6 @@ effect* EffectByName(const char* name)
     Serial.println("Unrecognized effect!");
     return &null;
   }
-
 }
 
 void SelectEffect(const char* name)
@@ -162,8 +166,8 @@ void PrintState()
   else Serial.println("NULL");
 
   Serial.println("blendmodes: ");
-  Serial.println(blendmodes[0]);
-  Serial.println(blendmodes[1]);
+  Serial.print(" blend0: "); Serial.println(blendmodes[0]);
+  Serial.print(" blend1: "); Serial.println(blendmodes[1]);
 }
 
 void PrintHelp()
@@ -195,6 +199,9 @@ void PrintHelp()
   Serial.printf("blendmode <slot> <mode>\n");
   Serial.printf("clearmode <slot> <mode>\n");
   Serial.println();
+
+  Serial.printf("stop, state, list\n");
+  Serial.println();
 }
 
 void DoCommand()
@@ -207,7 +214,6 @@ void DoCommand()
   {
     Serial.print("Arg: "); Serial.println(args[i]);
   }
-
 
   if (strcmp(command, "amps") == 0)
   {
@@ -285,7 +291,8 @@ void DoCommand()
     if (slot >= 0 && slot < 3)
       selectedEffect = currenteffects[slot];
   }
-  else if (strcmp(command, "seteffect") == 0)
+  else if (strcmp(command, "seteffect") == 0 ||
+           strcmp(command, "se") == 0)
   {
     int slot = atoi(args[0]);
     if (slot < 0 || slot > 2) goto ERR;
@@ -324,6 +331,33 @@ void DoCommand()
   {
     Serial.println("doing print state command");
     PrintState();
+  }
+  else if (strcmp(command, "stop") == 0)
+  {
+    SetEffect(0, "null");
+    SetEffect(1, "null");
+    if (currenteffects[0] != NULL)
+      currenteffects[0]->SetBuffer(leds[0]);
+    if (currenteffects[1] != NULL)
+      currenteffects[1]->SetBuffer(leds[1]);
+  }
+  else if (strcmp(command, "list") == 0)
+  {
+    Serial.println("list of effects");
+    for (int l = 0; l < numEffects; l++)
+    {
+      Serial.print("   "); Serial.println(effectTable[l]->Identify());
+    }
+    Serial.println("list of base effects");
+    for (int m = 0; m < numBaseEffects; m++)
+    {
+      Serial.print("   "); Serial.println(baseEffects[m]->Identify());
+    }
+    Serial.println("list of layer effects");
+    for (int n = 0; n < numLayerEffects; n++)
+    {
+      Serial.print("   "); Serial.println(layerEffects[n]->Identify());
+    }
   }
   else if (strcmp(command, "help") == 0)
   {

@@ -8,8 +8,6 @@ class flame : public effect
     // Let's turn this into a "life" like simulation
   public:
 
-
-
     uint8_t palIndex = 255;
 
     unsigned long micsperemit = ONEMIL;
@@ -19,11 +17,10 @@ class flame : public effect
 
   public:
 
-
     void Init(int shiftpersec)
     {
-      Serial.printf("flame Init()...\n");
-      Serial.flush();
+      // Serial.printf("flame Init()...\n");
+      // Serial.flush();
       // How many mics to wait til next change
       micsperemit = (unsigned long)((1.0f / (float)shiftpersec) * (float)ONEMIL);
       timeTillEmit = micsperemit;
@@ -31,7 +28,6 @@ class flame : public effect
       SetupFlameFront();
 
 #if 0
-
 
       Serial.printf("About to init the test matrix\n");
       Serial.flush();
@@ -60,16 +56,14 @@ class flame : public effect
 
     String Identify()
     {
-      return "image";
+      return "flame";
     }
 
     void Reset()
     {
       micsperemit = ONEMIL;
       timeTillEmit = 0;
-
     }
-
 
     void SetSpeed(float ledspersec)
     {
@@ -229,7 +223,6 @@ class flame : public effect
             board[y][x] = 0; // burn out
           }
         }
-
 
       }
 

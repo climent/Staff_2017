@@ -1,4 +1,4 @@
-#ifndef COMMMON_HEADERS_H
+#ifndef COMMON_HEADERS_H
 #define COMMON_HEADERS_H
 
 #include "effect.h"
