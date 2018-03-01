@@ -16,8 +16,7 @@ enum MixMode
   kOff
 };
 
-
-// Render buffers 0-2 and final mixdown buffer 3
+// Render buffers 0-1 and final mixdown buffer 2
 #define kMixDownBuffer 2
 CRGB leds[3][NUM_LEDS];
 

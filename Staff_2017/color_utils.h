@@ -22,9 +22,13 @@ void PrintColor(CRGB c)
 
 void PrintColor(CHSV c)
 {
-  Serial.print("hsvcolor: "); Serial.print(c.h); Serial.print(", "); Serial.print(c.s); Serial.print(", "); Serial.println(c.v);
+  Serial.print("hsvcolor: ");
+  Serial.print(c.h);
+  Serial.print(", ");
+  Serial.print(c.s);
+  Serial.print(", ");
+  Serial.println(c.v);
 }
-
 
 void CheckColor(float r, float g, float b)
 {
@@ -41,7 +45,6 @@ void CheckColor(float r, float g, float b)
     Serial.print("Bad b value: "); Serial.println(b);
   }
 }
-
 
 CRGB randomcolor()
 {

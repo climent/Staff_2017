@@ -11,20 +11,14 @@ class pulse : public effect
 
   public:
 
-  	void Init()
-    {
-
-    }
+  	void Init() {}
 
     String Identify()
     {
       return "pulse";
     }
 
-    void Reset()
-    {
-
-    }
+    void Reset() {}
 
     void SetFrequency(float f)
     {
@@ -32,7 +26,6 @@ class pulse : public effect
       // How many mics to wait til next spark
       micsperflash = (unsigned long)((1.0f/f) * 1000000.0f);
     }
-
 
   	void Animate(unsigned long mics)
   	{

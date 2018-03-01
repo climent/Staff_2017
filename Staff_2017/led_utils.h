@@ -1,21 +1,29 @@
 #ifndef LEDUTILS_H
 #define LEDUTILS_H
 
-void Overwrite (CRGB* src, CRGB* dst)
+void Overwrite(CRGB* src, CRGB* dst)
 {
   for (int i = 0; i < NUM_LEDS; i++)
     dst[i] = src[i];
 }
 
-void BlendHalf (CRGB* src, CRGB* dst)
+void BlendBy(CRGB* src, CRGB* dst, int percent)
 {
   for (int i = 0; i < NUM_LEDS; i++)
   {
-    dst[i] = blend( dst[i], src[i], 128 ); // <<TODO>> Make a version that does a variable blend!
+    dst[i] = blend( dst[i], src[i], percent);
   }
 }
 
-void WriteOneChannel (CRGB* src, CRGB* dst, int channel)
+void BlendHalf(CRGB* src, CRGB* dst)
+{
+  for (int i = 0; i < NUM_LEDS; i++)
+  {
+    dst[i] = blend( dst[i], src[i], 128);
+  }
+}
+
+void WriteOneChannel(CRGB* src, CRGB* dst, int channel)
 {
   for (int i = 0; i < NUM_LEDS; i++)
   {
@@ -28,7 +36,7 @@ void WriteOneChannel (CRGB* src, CRGB* dst, int channel)
   }
 }
 
-void WriteIfNonBlack (CRGB* src, CRGB* dst, int channel)
+void WriteIfNonBlack(CRGB* src, CRGB* dst, int channel)
 {
   for (int i = 0; i < NUM_LEDS; i++)
   {
@@ -37,7 +45,7 @@ void WriteIfNonBlack (CRGB* src, CRGB* dst, int channel)
   }
 }
 
-void BlendIfBrighter (CRGB* src, CRGB* dst)
+void BlendIfBrighter(CRGB* src, CRGB* dst)
 {
   for (int i = 0; i < NUM_LEDS; i++)
   {
@@ -58,7 +66,7 @@ void ChooseBrightest(CRGB* src, CRGB* dst)
   }
 }
 
-void OverwriteIfEven (CRGB* src, CRGB* dst)
+void OverwriteIfEven(CRGB* src, CRGB* dst)
 {
   for (int i = 0; i < NUM_LEDS; i++)
   {
@@ -69,7 +77,7 @@ void OverwriteIfEven (CRGB* src, CRGB* dst)
   }
 }
 
-void OverwriteIfBrighter (CRGB* src, CRGB* dst, int level)
+void OverwriteIfBrighter(CRGB* src, CRGB* dst, int level)
 {
   for (int i = 0; i < NUM_LEDS; i++)
   {
@@ -152,7 +160,8 @@ void SafeShow()
   show_at_max_brightness_for_power();
 }
 
-// Some utils to get normed values of height and angle (around staff) based on led index i
+// Some utils to get normed values of height and angle (around staff) based on
+// led index i
 float GetHeight(int i)
 {
   float p = (float)(i) / (float)(NUM_LEDS);
