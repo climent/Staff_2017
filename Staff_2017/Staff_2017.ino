@@ -65,9 +65,6 @@ void setup ()
   imu.begin();
   filter.begin(100);
 
-  // Run a color check and strip test
-  // Test(leds[3]);
-
   // Create a bunch of palettes to use
   GenerateGlobalPalettes();
 
@@ -112,7 +109,41 @@ void loop ()
 
   // Update the sensors and the fusion filter
   UpdateMotion(deltamics);
+  AnalizeMotion();
 
+  // Handle inputs
+  ProcessInput(deltamics);
+
+  if (timeTillPrint <= 0)
+  {
+    timeTillPrint = 10000;
+    // Print stats
+    Printer();
+  }  
+
+  if (timeTillOrientation <= 0)
+  {
+    timeTillOrientation = 16;
+    // Update the orientation
+    getOrientation(&roll,&pitch,&heading,&x,&y,&z);
+  }
+
+  // Animate the controller. This will animate any active effects, process
+  // animated palettes, lfo's, and do random or scripted switching of effects
+  // and animation of parameters
+  controller.Animate(deltamics);
+
+  // Render all active buffers and mixdown, then show with power limits applied
+  if (timeTillRender <= 0)
+  {
+    renderCount++;
+    timeTillRender = 8;
+    controller.Render();
+    show_at_max_brightness_for_power();
+  }
+}
+
+void AnalizeMotion() {
   if (gotFlipped)
   {
     gotFlipped = false;
@@ -171,55 +202,25 @@ void loop ()
     Serial.printf("Got bump command: %d bumps\n",numBumps);
     numBumps = 0;
   }
+}
 
-  // Handle inputs
-  ProcessInput(deltamics);
+void Printer() {
+  // Serial.print("frames per sec: "); Serial.println(frameCount / 10);
+  // frameCount = 0;
+  // Serial.print("rendered frames: "); Serial.println(renderCount / 10);
+  // renderCount = 0;
+  Serial.print("deltamics: "); Serial.println(deltamics);
+  // Serial.print("micsToPause: ");Serial.println(micsToPause);
+  // Serial.print("Serial available: ");Serial.println(Serial.available());
 
-  if (timeTillPrint <= 0)
-  {
-    timeTillPrint = 10000;
+  //Serial.print("x: "); Serial.println(x);
+  //Serial.print("y: "); Serial.println(y);
+  //Serial.print("z: "); Serial.println(z);
 
-    // Serial.print("frames per sec: "); Serial.println(frameCount / 10);
-    // frameCount = 0;
-    // Serial.print("rendered frames: "); Serial.println(renderCount / 10);
-    // renderCount = 0;
-    Serial.print("deltamics: "); Serial.println(deltamics);
-    // Serial.print("micsToPause: ");Serial.println(micsToPause);
-    // Serial.print("Serial available: ");Serial.println(Serial.available());
-
-    //Serial.print("x: "); Serial.println(x);
-    //Serial.print("y: "); Serial.println(y);
-    //Serial.print("z: "); Serial.println(z);
-
-#if 0
-    Serial.print("Orientation: ");
-    Serial.print(heading);
-    Serial.print(" ");
-    Serial.print(pitch);
-    Serial.print(" ");
-    Serial.println(roll);
-#endif
-  }
-
-  if (timeTillOrientation <= 0)
-  {
-    // Update the orientation
-    getOrientation(&roll,&pitch,&heading,&x,&y,&z);
-    timeTillOrientation = 16;
-  }
-
-  // Animate the controller. This will animate any active effects, process
-  // animated palettes, lfo's, and do random or scripted switching of effects
-  // and animation of parameters
-  controller.Animate(deltamics);
-
-  // Render all active buffers and mixdown, then show with power limits applied
-  if (timeTillRender <= 0)
-  {
-    renderCount++;
-    timeTillRender = 8;
-    controller.Render();
-    show_at_max_brightness_for_power();
-  }
-
+  // Serial.print("Orientation: ");
+  // Serial.print(heading);
+  // Serial.print(" ");
+  // Serial.print(pitch);
+  // Serial.print(" ");
+  // Serial.println(roll);
 }

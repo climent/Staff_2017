@@ -235,36 +235,21 @@ class controller : public effect
     {
       float dt = (float)(mics) / 1000000.0f;
 
-      // periodically change the palette
+      // Periodically change the palette
       micsTilPalChange -= mics;
       if (micsTilPalChange <= 0)
       {
-
-        // NOPE random palettes suck
-#if 0
-        if (random8() > 200)
-        {
-          // Set one of the palettes to be a random set of colors?
-          GenerateRandomPalettes();
-          palmixer.SetRandomPalette(0, 4.0f);
-          palmixer.SetRandomPalette(1, 4.0f);
-        }
-        else
-#endif
-
-        {
-          // For now change all palettes
-          //Serial.printf("Changing palettes...\n");
-          int newpal = random(0, kNumPalettes);
-          // one second fade to next palette
-          palmixer.SetNewPalette(0, newpal, 4.0f);
-          newpal = random(0, kNumPalettes);
-          // one second fade to next palette
-          palmixer.SetNewPalette(1, newpal, 4.0f);
-          newpal = random(0, kNumPalettes);
-          // one second fade to next palette
-          palmixer.SetNewPalette(2, newpal, 4.0f);
-        }
+        // For now change all palettes
+        //Serial.printf("Changing palettes...\n");
+        int newpal = random(0, kNumPalettes);
+        // one second fade to next palette
+        palmixer.SetNewPalette(0, newpal, 4.0f);
+        newpal = random(0, kNumPalettes);
+        // one second fade to next palette
+        palmixer.SetNewPalette(1, newpal, 4.0f);
+        newpal = random(0, kNumPalettes);
+        // one second fade to next palette
+        palmixer.SetNewPalette(2, newpal, 4.0f);
 
         micsTilPalChange = micsPerPalchange;
       }
