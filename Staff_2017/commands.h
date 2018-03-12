@@ -97,7 +97,6 @@ void SetFadeTime(int slot, float fadetime)
   }
 }
 
-
 void SetSpeed(int slot, float speed)
 {
   if (slot < 0 || slot > 1) return;

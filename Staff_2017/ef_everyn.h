@@ -131,8 +131,8 @@ public:
   //    if (check2 == 0)
       if (0)
       {
-        RenderSoftSpot(dst,i,c2);
-        RenderSoftSpot(dst,otherSide,c2);
+        RenderSoftSpot(dst, i, c2);
+        RenderSoftSpot(dst, otherSide, c2);
       }
     }
   }
